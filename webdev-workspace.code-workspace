@@ -1,0 +1,21 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"files.associations": {
+			"map": "cpp",
+			"xtree": "cpp",
+			"iostream": "cpp",
+			"xutility": "cpp",
+			"vector": "cpp",
+			"ostream": "cpp",
+			"queue": "cpp",
+			"utility": "cpp",
+			"iosfwd": "cpp",
+			"xstring": "cpp"
+		}
+	}
+}
