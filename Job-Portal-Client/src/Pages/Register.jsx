@@ -1,14 +1,27 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import Lottie from "lottie-react";
 import animationData from "../../public/signup_animation.json";
+import AuthContext from '../Context/AuthContext';
 
 const Register = () => {
+    const { user, setUser, loading, setLoading, registerUser, signInUser, signOutUser } = useContext(AuthContext);
     const handleRegister = (event) => {
         event.preventDefault();
         const form = event.target;
         const email = form.email.value;
         const password = form.password.value;
         console.log(email, password);
+        registerUser(email, password)
+            .then(result => {
+                const user = result.user;
+                console.log(user);
+                setLoading(false);
+                form.reset();
+            })
+            .catch(error => {
+                console.error(error.message);
+            })
+
     }
     return (
         <div>

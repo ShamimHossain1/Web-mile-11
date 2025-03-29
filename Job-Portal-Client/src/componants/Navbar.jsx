@@ -1,10 +1,25 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
+import AuthContext from '../Context/AuthContext';
 
 const Navbar = () => {
+    const { user, setUser, loading, setLoading, signInUser, signOutUser } = useContext(AuthContext);
+    const handleSignOut = () => {
+        signOutUser().then(() => {
+            setUser(null);
+        })
+        .catch(error => {
+            console.error(error.message);
+  
+        })
+    }
+
+    // console.log(user);
+    const { displayName,
+        email } = user || {};
     const links = <>
-     <li><a>Item 1</a></li>
-     <li><a>Item 3</a></li>
+        <li><a>Item 1</a></li>
+        <li><a>Item 3</a></li>
     </>
     return (
         <div>
@@ -17,19 +32,21 @@ const Navbar = () => {
                         <ul
                             tabIndex={0}
                             className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
-                           {links}
+                            {links}
                         </ul>
                     </div>
-                    <a className="btn btn-ghost text-xl">daisyUI</a>
+                    <a href="/" className="btn btn-ghost text-xl">{user ? (displayName? displayName : email) : 'User'}</a>
                 </div>
                 <div className="navbar-center hidden lg:flex">
                     <ul className="menu menu-horizontal px-1">
-                       {links}
+                        {links}
                     </ul>
                 </div>
                 <div className="navbar-end">
-                    <Link to="/login" className="btn">Sign In</Link>
-                    <Link to="/register" className="btn">Register</Link>
+                   {
+                    user ?   <Link onClick={() => handleSignOut()} to="/login" className="btn">Sign Out</Link> : <><Link to="/login" className="btn">Sign In</Link>
+                    <Link to="/register" className="btn">Register</Link></> 
+                   }
                 </div>
             </div>
         </div>
