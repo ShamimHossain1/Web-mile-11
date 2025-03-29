@@ -22,7 +22,7 @@ const AuthProvider = ({ children }) => {
 
     // Sign out user
     const signOutUser = () => {
-        return signOut();
+        return signOut(auth);
     }
 
     useEffect(() => {
@@ -30,7 +30,7 @@ const AuthProvider = ({ children }) => {
             setUser(currentUser);
             setLoading(false);
         });
-        
+
         return () => unsubscribe();
     })
 

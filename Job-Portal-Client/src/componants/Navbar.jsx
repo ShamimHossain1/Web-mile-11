@@ -3,15 +3,15 @@ import { Link } from 'react-router-dom';
 import AuthContext from '../Context/AuthContext';
 
 const Navbar = () => {
-    const { user, setUser, loading, setLoading, signInUser, signOutUser } = useContext(AuthContext);
+    const { user, setUser, signOutUser } = useContext(AuthContext);
     const handleSignOut = () => {
         signOutUser().then(() => {
             setUser(null);
         })
-        .catch(error => {
-            console.error(error.message);
-  
-        })
+            .catch(error => {
+                console.error(error.message);
+
+            })
     }
 
     // console.log(user);
@@ -23,7 +23,7 @@ const Navbar = () => {
     </>
     return (
         <div>
-            <div className="navbar bg-base-100 shadow-sm">
+            <div className="navbar bg-gray-900  shadow-sm">
                 <div className="navbar-start">
                     <div className="dropdown">
                         <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -35,7 +35,7 @@ const Navbar = () => {
                             {links}
                         </ul>
                     </div>
-                    <a href="/" className="btn btn-ghost text-xl">{user ? (displayName? displayName : email) : 'User'}</a>
+                    <a href="/" className="btn btn-ghost text-xl">Job Portal</a>
                 </div>
                 <div className="navbar-center hidden lg:flex">
                     <ul className="menu menu-horizontal px-1">
@@ -43,10 +43,10 @@ const Navbar = () => {
                     </ul>
                 </div>
                 <div className="navbar-end">
-                   {
-                    user ?   <Link onClick={() => handleSignOut()} to="/login" className="btn">Sign Out</Link> : <><Link to="/login" className="btn">Sign In</Link>
-                    <Link to="/register" className="btn">Register</Link></> 
-                   }
+                    {
+                        user ? <Link onClick={() => handleSignOut()} to="/login" className="btn">Sign Out</Link> : <><Link to="/login" className="btn">Sign In</Link>
+                            <Link to="/register" className="btn">Register</Link></>
+                    }
                 </div>
             </div>
         </div>
