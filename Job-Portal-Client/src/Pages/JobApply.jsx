@@ -30,7 +30,7 @@ const JobApply = () => {
             background: '#1f2937',
             color: '#f3f4f6'
         }).then(() => {
-            // navigate('/jobs');
+            navigate('/');
         });
     }
 
