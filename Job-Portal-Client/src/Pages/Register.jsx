@@ -2,9 +2,11 @@ import React, { useContext } from 'react';
 import Lottie from "lottie-react";
 import animationData from "../../public/signup_animation.json";
 import AuthContext from '../Context/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 const Register = () => {
-    const { user, setUser, loading, setLoading, registerUser, signInUser, signOutUser } = useContext(AuthContext);
+    const { setUser, setLoading, registerUser } = useContext(AuthContext);
+    const navigate = useNavigate();
     const handleRegister = (event) => {
         event.preventDefault();
         const form = event.target;
@@ -17,6 +19,9 @@ const Register = () => {
                 console.log(user);
                 setLoading(false);
                 form.reset();
+                setUser(null);
+                navigate('/login');
+
             })
             .catch(error => {
                 console.error(error.message);

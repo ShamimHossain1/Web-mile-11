@@ -1,11 +1,12 @@
-import React, { useContext } from 'react';
+import React, { use, useContext } from 'react';
 import Lottie from "lottie-react";
 import animationData from "../../public/signup_animation.json";
 import AuthContext from '../Context/AuthContext';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 const Login = () => {
   const navigate = useNavigate();
   const { user, setUser, loading, setLoading, signInUser } = useContext(AuthContext);
+  const location = useLocation();
   const handleLogin = (event) => {
     event.preventDefault();
     const form = event.target;
@@ -19,7 +20,7 @@ const Login = () => {
         setUser(user);
         setLoading(false);
         form.reset();
-        navigate('/');
+        navigate( location?.state || '/');
       })
       .catch(error => {
         console.error(error.message);
