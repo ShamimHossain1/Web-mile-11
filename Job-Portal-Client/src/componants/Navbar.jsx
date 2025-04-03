@@ -19,7 +19,7 @@ const Navbar = () => {
         email } = user || {};
     const links = <>
         <li><a>Item 1</a></li>
-        <li><a>Item 3</a></li>
+        <li><Link to="/MyApplications">My Applications</Link></li>
     </>
     return (
         <div>

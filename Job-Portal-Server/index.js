@@ -50,6 +50,7 @@ async function run() {
 
     app.get('/job-Applications', async (req, res) => {
       const email = req.query.email;
+  
       const query = {
         applicant_email: email
       }
