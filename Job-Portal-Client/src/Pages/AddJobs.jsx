@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
 import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
+import useAuth from '../hooks/useAuth';
 
 const AddJobs = () => {
     const navigate = useNavigate();
+    const { user } = useAuth();
+   
 
     const [currencySymbol, setCurrencySymbol] = useState('৳');
 
@@ -116,7 +119,8 @@ const AddJobs = () => {
                 <input type="text" name="requirements" placeholder="Requirements (comma separated)" required className="input-field" />
                 <input type="text" name="responsibilities" placeholder="Responsibilities (comma separated)" required className="input-field" />
 
-                <input type="email" name="hr_email" placeholder="HR Email" required className="input-field" />
+                <input type="email" name="hr_email" required value={user?.email} readOnly className="input-field" />
+              
                 <input type="text" name="hr_name" placeholder="HR Name" required className="input-field" />
                 <input type="url" name="company_logo" placeholder="Company Logo URL" className="input-field" />
 

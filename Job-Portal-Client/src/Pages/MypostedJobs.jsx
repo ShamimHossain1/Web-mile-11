@@ -13,7 +13,7 @@ const MypostedJobs = () => {
                 .then(res => res.json())
                 .then(data => setJobs(data));
         }
-    }, [user]);
+    }, [user.email]);
 
     const handleDelete = (id) => {
         Swal.fire({

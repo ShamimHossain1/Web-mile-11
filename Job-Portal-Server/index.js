@@ -37,8 +37,7 @@ async function run() {
       if (email) {
         query = { hr_email: email };
       }
-      
-      const result = await jobsCollection.find().toArray();
+      const result= await jobsCollection.find(query).toArray();
       res.send(result);
     });
 
