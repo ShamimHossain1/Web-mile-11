@@ -32,7 +32,19 @@ async function run() {
     const jobApplicationsCollection = client.db('JobPortal').collection('jobApplications');
 
     app.get('/jobs', async (req, res) => {
+      const email = req.query.hr_email;
+      let query = {};
+      if (email) {
+        query = { hr_email: email };
+      }
+      
       const result = await jobsCollection.find().toArray();
+      res.send(result);
+    });
+
+    app.delete('/jobs/:id', async (req, res) => {
+      const id = req.params.id;
+      const result = await jobsCollection.deleteOne({ _id: new ObjectId(id) });
       res.send(result);
     });
 
@@ -62,7 +74,7 @@ async function run() {
       const jobData = req.body;
       const result = await jobsCollection.insertOne(jobData);
       res.send(result);
-    })
+    });
 
 
 
