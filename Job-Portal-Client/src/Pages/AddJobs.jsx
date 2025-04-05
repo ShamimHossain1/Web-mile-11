@@ -1,13 +1,24 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
 
 const AddJobs = () => {
     const navigate = useNavigate();
 
+    const [currencySymbol, setCurrencySymbol] = useState('৳');
+
+    const handleCurrencyChange = (e) => {
+        const value = e.target.value;
+        setCurrencySymbol(value === 'usd' ? '$' : value === 'eur' ? '€' : '৳');
+    };
+
     const handleSubmit = (e) => {
         e.preventDefault();
         const form = e.target;
+        // const formData = new FormData(form);
+        // const formDataObj = Object.fromEntries(formData.entries());
+        // console.log(formDataObj); // For debugging purposes
+        // console.log(formData);
 
         const jobData = {
             title: form.title.value,
@@ -22,13 +33,38 @@ const AddJobs = () => {
             },
             description: form.description.value,
             company: form.company.value,
-            requirements: form.requirements.value.split(',').map(r => r.trim()),
-            responsibilities: form.responsibilities.value.split(',').map(r => r.trim()),
+            requirements: form.requirements.value.split('\n').map(r => r.trim()),
+            responsibilities: form.responsibilities.value.split('\n').map(r => r.trim()),
             status: "active",
             hr_email: form.hr_email.value,
             hr_name: form.hr_name.value,
             company_logo: form.company_logo.value
         };
+
+        fetch("http://localhost:3000/AddJobs",{
+            method: 'POST',
+            headers:{
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(jobData)
+
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.acknowledged) {
+                form.reset();
+                Swal.fire({
+                    title: 'Job Posted!',
+                    text: 'Your job has been successfully posted.',
+                    icon: 'success',
+                    confirmButtonColor: '#3b82f6',
+                    background: '#1f2937',
+                    color: '#f3f4f6'
+                }).then(() => {
+                    navigate('/');
+                });
+            }
+        })
 
         
     };
@@ -40,14 +76,40 @@ const AddJobs = () => {
             <form onSubmit={handleSubmit} className="bg-gray-800 p-6 rounded-xl border border-gray-700 shadow-xl space-y-5">
                 <input type="text" name="title" placeholder="Job Title" required className="input-field" />
                 <input type="text" name="location" placeholder="Location (e.g. Halishohor, Chittagong)" required className="input-field" />
-                <input type="text" name="jobType" placeholder="Job Type (e.g. Hybrid, Remote, On-site)" required className="input-field" />
-                <input type="text" name="category" placeholder="Job Category (e.g. Engineering)" required className="input-field" />
+
+                {/* Job Type Dropdown */}
+                <select name="jobType" required className="input-field">
+                    <option value="">Select Job Type</option>
+                    <option value="Remote">Remote</option>
+                    <option value="On-site">On-site</option>
+                    <option value="Hybrid">Hybrid</option>
+                </select>
+
+                {/* Category Dropdown */}
+                <select name="category" required className="input-field">
+                    <option value="">Select Job Category</option>
+                    <option value="Engineering">Engineering</option>
+                    <option value="Design">Design</option>
+                    <option value="Marketing">Marketing</option>
+                    <option value="Product">Product</option>
+                    <option value="Sales">Sales</option>
+                    <option value="Support">Support</option>
+                    <option value="HR">HR</option>
+                    <option value="Finance">Finance</option>
+                </select>
+
                 <input type="date" name="applicationDeadline" required className="input-field" />
-                
+
+                {/* Salary Inputs with Currency Dropdown */}
                 <div className="grid grid-cols-2 gap-4">
-                    <input type="number" name="salaryMin" placeholder="Min Salary (e.g. 40000)" required className="input-field" />
-                    <input type="number" name="salaryMax" placeholder="Max Salary (e.g. 60000)" required className="input-field" />
+                    <input type="number" name="salaryMin" placeholder={`Min Salary (${currencySymbol})`} required className="input-field" />
+                    <input type="number" name="salaryMax" placeholder={`Max Salary (${currencySymbol})`} required className="input-field" />
                 </div>
+                <select name="currency" onChange={handleCurrencyChange} required className="input-field">
+                    <option value="bdt">BDT (৳)</option>
+                    <option value="usd">USD ($)</option>
+                    <option value="eur">EUR (€)</option>
+                </select>
 
                 <textarea name="description" placeholder="Job Description" required className="input-field h-24" />
                 <input type="text" name="company" placeholder="Company Name" required className="input-field" />
