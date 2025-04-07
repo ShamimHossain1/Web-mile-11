@@ -3,7 +3,8 @@ import { FaDollarSign, FaMapMarkerAlt, FaBriefcase } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 
 const HotJobCard = ({ job }) => {
-    const { _id, title, company, company_logo, requirements, description, location, salaryRange } = job;
+    const { _id, title, company, company_logo, requirements, description, location, salaryRange, applicationCount } = job;
+
     
     return (
         <div className="card card-compact bg-base-100 shadow-xl hover:shadow-2xl transition-shadow duration-300 border border-gray-700">
@@ -11,11 +12,9 @@ const HotJobCard = ({ job }) => {
                 <figure className="flex-shrink-0">
                     <img
                         className='w-16 h-16 object-contain rounded-lg border border-gray-800'
-                        src={company_logo || 'https://via.placeholder.com/64'}
+                        src={company_logo }
                         alt={company}
-                        onError={(e) => {
-                            e.target.src = 'https://via.placeholder.com/64';
-                        }}
+                       
                     />
                 </figure>
                 <div className="flex-grow">
@@ -55,6 +54,7 @@ const HotJobCard = ({ job }) => {
                         ))}
                     </div>
                 </div>
+            {  applicationCount > 0 &&  <h2>{applicationCount} applicant</h2>}
                 
                 <div className="card-actions justify-between items-center mt-4 pt-4 border-t border-gray-100">
                     <div className="flex items-center gap-1 text-gray-400">
