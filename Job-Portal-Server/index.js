@@ -66,7 +66,7 @@ async function run() {
         count = job.applicationCount + 1;
       }
       else{
-        newCount = 1;
+        count = 1;
       }
 
       const filter = { _id: new ObjectId(id) };
