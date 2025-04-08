@@ -92,6 +92,20 @@ async function run() {
       res.send(result);
     });
 
+    app.patch('/job-applications/:id', async (req, res) => {
+      const id = req.params.id;
+      const status = req.body.status;
+     const filter = { _id: new ObjectId(id) };
+      const updateDoc ={
+        $set: {
+          status: status
+        }
+      }
+      const result = await jobApplicationsCollection.updateOne(filter, updateDoc);
+      res.send(result);
+    
+    });
+
     app.post('/AddJobs', async (req, res)=>{
       const jobData = req.body;
       const result = await jobsCollection.insertOne(jobData);
@@ -107,6 +121,9 @@ async function run() {
       const result = await jobApplicationsCollection.find(query).toArray();
       res.send(result);
     });
+
+    
+
 
 
 

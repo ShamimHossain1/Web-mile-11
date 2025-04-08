@@ -27,6 +27,7 @@ const MyApplications = () => {
                 const appliedData = await appliedResponse.json();
                 setAppliedJobs(appliedData);
 
+
                 // Fetch all jobs
                 const jobsResponse = await fetch('http://localhost:3000/jobs');
                 const jobsData = await jobsResponse.json();
@@ -45,34 +46,11 @@ const MyApplications = () => {
     const appliedJobIds = appliedJobs.map(job => job.job_id);
     const appliedJobsDetails = jobs.filter(job => appliedJobIds.includes(job._id));
 
-    const getStatusBadge = (status) => {
-        switch (status) {
-            case 'under-review':
-                return (
-                    <span className="flex items-center px-3 py-1 bg-yellow-900 text-yellow-300 text-sm font-medium rounded-full">
-                        <FaRegClock className="mr-1" /> Under Review
-                    </span>
-                );
-            case 'rejected':
-                return (
-                    <span className="flex items-center px-3 py-1 bg-red-900 text-red-300 text-sm font-medium rounded-full">
-                        <FaRegTimesCircle className="mr-1" /> Rejected
-                    </span>
-                );
-            case 'accepted':
-                return (
-                    <span className="flex items-center px-3 py-1 bg-green-900 text-green-300 text-sm font-medium rounded-full">
-                        <FaCheckCircle className="mr-1" /> Accepted
-                    </span>
-                );
-            default:
-                return (
-                    <span className="flex items-center px-3 py-1 bg-gray-700 text-gray-300 text-sm font-medium rounded-full">
-                        Pending
-                    </span>
-                );
-        }
-    };
+    
+
+
+
+  
 
     const formatDate = (dateString) => {
         if (!dateString) return 'N/A';
@@ -121,19 +99,18 @@ const MyApplications = () => {
                         // Find the corresponding application to get the status
                         const application = appliedJobs.find(app => app.job_id === job._id);
                         
+                        const status = application?.status || 'pending';
+                        
                         return (
                             <div key={job._id} className="bg-gray-800 rounded-xl shadow-md overflow-hidden border border-gray-700 hover:border-gray-600 transition-colors">
                                 <div className="p-6 md:p-8">
                                     <div className="flex flex-col md:flex-row gap-6">
                                         <div className="flex-shrink-0">
                                             <img
-                                                src={job.company_logo || 'https://via.placeholder.com/80'}
+                                                src={job.company_logo }
                                                 alt={`${job.company} logo`}
                                                 className="w-16 h-16 object-contain border border-gray-700 rounded-lg"
-                                                onError={(e) => {
-                                                    e.target.src = 'https://via.placeholder.com/80';
-                                                    e.target.onerror = null;
-                                                }}
+                                               
                                             />
                                         </div>
                                         <div className="flex-grow">
@@ -164,11 +141,11 @@ const MyApplications = () => {
                                                         )}
                                                     </div>
                                                 </div>
-                                                {application && (
+                                                
                                                     <div>
-                                                        {getStatusBadge(application.status || 'pending')}
+                                                        {status}
                                                     </div>
-                                                )}
+                                               
                                             </div>
 
                                             <div className="mt-4">
