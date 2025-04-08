@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import useAuth from '../hooks/useAuth';
 import Swal from 'sweetalert2';
 import { FaTrashAlt } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 
 const MypostedJobs = () => {
     const { user } = useAuth();
@@ -67,22 +68,33 @@ const MypostedJobs = () => {
                                         <p className="text-sm text-gray-400">Category: {job.category}</p>
                                         <p className="text-sm text-gray-400">Salary: {job.salaryRange?.min} - {job.salaryRange?.max} {job.salaryRange?.currency?.toUpperCase()}</p>
                                         <p className="text-sm mt-2 text-gray-400">Deadline: {job.applicationDeadline}</p>
+                                        <p className="text-sm mt-2 text-gray-400">Applications: {job.applicationCount}</p>
+
+                                        <Link to={`/view-applications/${job._id}`} className="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600 transition duration-200">
+                                    View Applications
+                                </Link>
+                                        
                                     </div>
-                                    <button
+                                  <div>
+                                  <button
                                         onClick={() => handleDelete(job._id)}
                                         className="text-red-500 hover:text-red-400 text-xl"
                                         title="Delete Job"
                                     >
                                         <FaTrashAlt />
                                     </button>
+                              
+                                  </div>
+
                                 </div>
+                              
                                 <p className="mt-4 text-sm text-gray-300">{job.description}</p>
                             </div>
                         ))}
                     </div>
                 )
             }
-        </div>
+        </div >
     );
 };
 
