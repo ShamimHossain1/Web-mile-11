@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+
 import { useLoaderData } from 'react-router-dom';
 import { FaEnvelope, FaFileAlt, FaGithub, FaLinkedin, FaUserCheck } from 'react-icons/fa';
 
