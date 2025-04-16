@@ -1,4 +1,5 @@
 import React, { use, useContext } from 'react';
+import axios from 'axios';
 import Lottie from "lottie-react";
 import animationData from "../../public/signup_animation.json";
 import AuthContext from '../Context/AuthContext';
@@ -15,12 +16,22 @@ const Login = () => {
     console.log(email, password);
     signInUser(email, password)
       .then(result => {
-        const user = result.user;
-        console.log(user);
-        setUser(user);
-        setLoading(false);
-        form.reset();
-        navigate( location?.state || '/');
+        // const user = result.user;
+        // console.log(user);
+        // setUser(user);
+        // setLoading(false);
+        // form.reset();
+        // navigate( location?.state || '/');
+
+        const userInfo = {
+          email: email,
+        }
+      axios.post('http://localhost:3000/jwt', userInfo)
+      .then(data => {
+     console.log(data);
+      })
+
+
       })
       .catch(error => {
         console.error(error.message);
