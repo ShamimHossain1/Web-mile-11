@@ -27,8 +27,8 @@ const Login = () => {
           email: email,
         }
       axios.post('http://localhost:3000/jwt', userInfo)
-      .then(data => {
-     console.log(data);
+      .then(res => {
+     console.log(res.data);
       })
 
 
