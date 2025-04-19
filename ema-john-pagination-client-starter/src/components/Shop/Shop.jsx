@@ -8,10 +8,15 @@ import { use } from 'react';
 
 const Shop = () => {
     const [products, setProducts] = useState([]);
-    const [cart, setCart] = useState([])
+    const [cart, setCart] = useState([]);
+    const [currentPage, setCurrentPage] = useState(0);
+
 
 const {count} = useLoaderData();
-   
+const itemsPerPage = 10;
+const pageCount = Math.ceil(count / itemsPerPage);
+
+   const pages = [...Array(pageCount).keys()];
 
     useEffect(() => {
         fetch('http://localhost:5000/products')
@@ -67,7 +72,8 @@ const {count} = useLoaderData();
 
     return (
         <div className='shop-container'>
-            <div className="products-container">
+           <div>
+           <div className="products-container">
                 {
                     products.map(product => <Product
                         key={product._id}
@@ -76,6 +82,21 @@ const {count} = useLoaderData();
                     ></Product>)
                 }
             </div>
+            <div className="pagination">
+    {
+        pages.map(page => (
+            <button
+                key={page}
+                onClick={() => setCurrentPage(page)}
+                className={page === currentPage ? 'selected' : ''}
+            >
+                {page + 1}
+            </button>
+        ))
+    }
+</div>
+
+           </div>
             <div className="cart-container">
                 <Cart
                     cart={cart}
@@ -86,6 +107,7 @@ const {count} = useLoaderData();
                     </Link>
                 </Cart>
             </div>
+
         </div>
     );
 };
