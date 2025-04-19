@@ -10,13 +10,13 @@ const Shop = () => {
     const [products, setProducts] = useState([]);
     const [cart, setCart] = useState([]);
     const [currentPage, setCurrentPage] = useState(0);
+    const [itemsPerPage, setItemsPerPage] = useState(10);
 
 
-const {count} = useLoaderData();
-const itemsPerPage = 10;
-const pageCount = Math.ceil(count / itemsPerPage);
+    const { count } = useLoaderData();
+    const pageCount = Math.ceil(count / itemsPerPage);
 
-   const pages = [...Array(pageCount).keys()];
+    const pages = [...Array(pageCount).keys()];
 
     useEffect(() => {
         fetch('http://localhost:5000/products')
@@ -72,31 +72,41 @@ const pageCount = Math.ceil(count / itemsPerPage);
 
     return (
         <div className='shop-container'>
-           <div>
-           <div className="products-container">
-                {
-                    products.map(product => <Product
-                        key={product._id}
-                        product={product}
-                        handleAddToCart={handleAddToCart}
-                    ></Product>)
-                }
-            </div>
-            <div className="pagination">
-    {
-        pages.map(page => (
-            <button
-                key={page}
-                onClick={() => setCurrentPage(page)}
-                className={page === currentPage ? 'selected' : ''}
-            >
-                {page + 1}
-            </button>
-        ))
-    }
-</div>
+            <div>
+                <div className="products-container">
+                    {
+                        products.map(product => <Product
+                            key={product._id}
+                            product={product}
+                            handleAddToCart={handleAddToCart}
+                        ></Product>)
+                    }
+                </div>
+                <div className="pagination">
+                    <button onClick={() => {if (currentPage > 0) setCurrentPage(currentPage - 1)}}>{"<"}</button>
+                    {
+                        pages.map(page => (
+                            <button
+                                key={page}
+                                onClick={() => setCurrentPage(page)}
+                                className={currentPage === page && 'selected'}
+                            >
+                                {page + 1}
+                            </button>
+                        ))
+                    }
+                    <button onClick={() => {if (currentPage < pageCount - 1) setCurrentPage(currentPage + 1)}}>{">"}</button>
+                    <select value={itemsPerPage} onChange={e => { setItemsPerPage(e.target.value); setCurrentPage(0) }}>
 
-           </div>
+                        <option value="10">10</option>
+                        <option value="20">20</option>
+                        <option value="30">30</option>
+                        <option value="40">40</option>
+                        <option value={count}>View All</option>
+                    </select>
+                </div>
+
+            </div>
             <div className="cart-container">
                 <Cart
                     cart={cart}
