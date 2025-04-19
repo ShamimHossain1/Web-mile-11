@@ -25,6 +25,8 @@ const MyApplications = () => {
                 // Fetch applied jobs
                 const appliedResponse = await fetch(`http://localhost:3000/job-Applications?email=${user?.email}`);
                 const appliedData = await appliedResponse.json();
+
+
                 setAppliedJobs(appliedData);
 
 
@@ -46,11 +48,6 @@ const MyApplications = () => {
     // Get details of applied jobs
     const appliedJobIds = appliedJobs.map(job => job.job_id);
     const appliedJobsDetails = jobs.filter(job => appliedJobIds.includes(job._id));
-
-    
-
-
-
   
 
     const formatDate = (dateString) => {

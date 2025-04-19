@@ -13,25 +13,23 @@ const Login = () => {
     const form = event.target;
     const email = form.email.value;
     const password = form.password.value;
-    console.log(email, password);
+    // console.log(email, password);
     signInUser(email, password)
       .then(result => {
-        // const user = result.user;
+        const user = result.user;
         // console.log(user);
-        // setUser(user);
-        // setLoading(false);
+        setUser(user);
+        setLoading(false);
         // form.reset();
         // navigate( location?.state || '/');
 
         const userInfo = {
-          email: email,
+          email: user.email,
         }
-      axios.post('http://localhost:3000/jwt', userInfo)
-      .then(res => {
-     console.log(res.data);
-      })
-
-
+        axios.post('http://localhost:3000/jwt', userInfo, { withCredentials: true })
+          .then(res => {
+            console.log(res.data);
+          })
       })
       .catch(error => {
         console.error(error.message);

@@ -7,9 +7,13 @@ const app = express();
 const port = process.env.PORT || 3000;
 require('dotenv').config();
 
-app.use(cors());
+app.use(cors({
+  origin: 'http://localhost:5173',
+  credentials: true,
+}));
 app.use(express.json());
 app.use(cookieParser());
+
 
 
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.sw25b.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
@@ -29,24 +33,24 @@ async function run() {
     // Connect the client to the server	(optional starting in v4.7)
     await client.connect();
 
-   // Job Collection APIs
+    // Job Collection APIs
     const jobsCollection = client.db('JobPortal').collection('jobs');
     const jobApplicationsCollection = client.db('JobPortal').collection('jobApplications');
 
 
     // Auth related APIs
-  app.post('/jwt', (req, res) => {
-    const user = req.body;
-    const token = jwt.sign(user, process.env.SECRET_KEY, { expiresIn: '1h' });
-    res
-    .cookie('token', token,{
-      httpOnly: true,
-      secure: false,
+    app.post('/jwt', (req, res) => {
+      const user = req.body;
+      const token = jwt.sign(user, process.env.SECRET_KEY, { expiresIn: '1h' });
+      res
+        .cookie('token', token, {
+          httpOnly: true,
+          secure: false,
 
-    })
-    .send({success: true});
+        })
+        .send({ success: true });
 
-  });
+    });
 
 
 
@@ -58,7 +62,7 @@ async function run() {
       if (email) {
         query = { hr_email: email };
       }
-      const result= await jobsCollection.find(query).toArray();
+      const result = await jobsCollection.find(query).toArray();
       res.send(result);
     });
 
@@ -83,10 +87,10 @@ async function run() {
       const job = await jobsCollection.findOne(query);
 
       let count = 0;
-      if(job.applicationCount){
+      if (job.applicationCount) {
         count = job.applicationCount + 1;
       }
-      else{
+      else {
         count = 1;
       }
 
@@ -105,7 +109,7 @@ async function run() {
 
     app.get('/job-Applications', async (req, res) => {
       const email = req.query.email;
-  
+
       const query = {
         applicant_email: email
       }
@@ -116,18 +120,18 @@ async function run() {
     app.patch('/job-applications/:id', async (req, res) => {
       const id = req.params.id;
       const status = req.body.status;
-     const filter = { _id: new ObjectId(id) };
-      const updateDoc ={
+      const filter = { _id: new ObjectId(id) };
+      const updateDoc = {
         $set: {
           status: status
         }
       }
       const result = await jobApplicationsCollection.updateOne(filter, updateDoc);
       res.send(result);
-    
+
     });
 
-    app.post('/AddJobs', async (req, res)=>{
+    app.post('/AddJobs', async (req, res) => {
       const jobData = req.body;
       const result = await jobsCollection.insertOne(jobData);
       res.send(result);
@@ -143,7 +147,7 @@ async function run() {
       res.send(result);
     });
 
-    
+
 
 
 
