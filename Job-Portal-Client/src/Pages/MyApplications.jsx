@@ -12,6 +12,7 @@ import {
   FaEnvelope
 } from 'react-icons/fa';
 import useAuth from '../hooks/useAuth';
+import axios from 'axios';
 
 const MyApplications = () => {
     const { user } = useAuth();
@@ -23,11 +24,15 @@ const MyApplications = () => {
         const fetchData = async () => {
             try {
                 // Fetch applied jobs
-                const appliedResponse = await fetch(`http://localhost:3000/job-Applications?email=${user?.email}`);
-                const appliedData = await appliedResponse.json();
+                // const appliedResponse = await fetch(`http://localhost:3000/job-Applications?email=${user?.email}`);
+                // const appliedData = await appliedResponse.json();
 
+                axios.get(`http://localhost:3000/job-Applications?email=${user?.email}`, { withCredentials: true })
+                .then(res => {
+                    setAppliedJobs(res.data);
+                })
 
-                setAppliedJobs(appliedData);
+                // setAppliedJobs(appliedData);
 
 
                 // Fetch all jobs
