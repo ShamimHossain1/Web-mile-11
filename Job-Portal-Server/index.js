@@ -23,15 +23,10 @@ const verifyToken = (req, res, next) => {
   jwt.verify(token, process.env.SECRET_KEY, (err, decoded) => {
     if(err) {
       return res.status(401).send({ message: 'unauthorized' });
-
     }
-
+    req.user = decoded;
     next();
-
   });
-
-
-
 
 }
 
@@ -134,6 +129,11 @@ async function run() {
       const query = {
         applicant_email: email
       }
+
+      if(req.user.email !== email) {
+        return res.status(403).send({ message: 'Unauthorized' });
+      }
+
       console.log(req.cookies);
       const result = await jobApplicationsCollection.find(query).toArray();
       res.send(result);
@@ -168,9 +168,6 @@ async function run() {
       const result = await jobApplicationsCollection.find(query).toArray();
       res.send(result);
     });
-
-
-
 
 
 
