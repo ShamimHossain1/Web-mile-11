@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import AuthContext from '../Context/AuthContext';
 import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut } from 'firebase/auth';
 import auth from '../../firebase';
+import axios from 'axios';
 
 
 const AuthProvider = ({ children }) => {
@@ -22,13 +23,36 @@ const AuthProvider = ({ children }) => {
 
     // Sign out user
     const signOutUser = () => {
+
         return signOut(auth);
     }
 
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, currentUser => {
             setUser(currentUser);
+console.log('Current User:', currentUser);
+
+            if (currentUser?.email) {
+                // console.log('User is signed in:', currentUser);
+                const userInfo = {
+                    email: currentUser.email,
+                }
+                axios.post('http://localhost:3000/jwt', userInfo, { withCredentials: true })
+                    .then(res => {
+                        console.log("User login",res.data);
+                    })
+            }
+            else {
+                axios.post('http://localhost:3000/logout',{}, { withCredentials: true })
+                    .then(res => {
+                        console.log("User sign out",res.data);
+                    })
+            }
+
+
+
             setLoading(false);
+
         });
 
         return () => unsubscribe();

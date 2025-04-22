@@ -26,10 +26,10 @@ const Login = () => {
         const userInfo = {
           email: user.email,
         }
-        axios.post('http://localhost:3000/jwt', userInfo, { withCredentials: true })
-          .then(res => {
-            console.log(res.data);
-          })
+        // axios.post('http://localhost:3000/jwt', userInfo, { withCredentials: true })
+        //   .then(res => {
+        //     console.log(res.data);
+        //   })
       })
       .catch(error => {
         console.error(error.message);
