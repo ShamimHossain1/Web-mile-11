@@ -13,12 +13,14 @@ import {
 } from 'react-icons/fa';
 import useAuth from '../hooks/useAuth';
 import axios from 'axios';
+import useAxiosSecure from '../hooks/useAxiosSecure';
 
 const MyApplications = () => {
     const { user } = useAuth();
     const [appliedJobs, setAppliedJobs] = useState([]);
     const [jobs, setJobs] = useState([]);
     const [loading, setLoading] = useState(true);
+    const axiosSecure = useAxiosSecure();
 
     useEffect(() => {
         const fetchData = async () => {
@@ -27,7 +29,12 @@ const MyApplications = () => {
                 // const appliedResponse = await fetch(`http://localhost:3000/job-Applications?email=${user?.email}`);
                 // const appliedData = await appliedResponse.json();
 
-                axios.get(`http://localhost:3000/job-Applications?email=${user?.email}`, { withCredentials: true })
+                // axios.get(`http://localhost:3000/job-Applications?email=${user?.email}`, { withCredentials: true })
+                // .then(res => {
+                //     setAppliedJobs(res.data);
+                // })
+
+                axiosSecure.get(`/job-Applications?email=${user?.email}`)
                 .then(res => {
                     setAppliedJobs(res.data);
                 })

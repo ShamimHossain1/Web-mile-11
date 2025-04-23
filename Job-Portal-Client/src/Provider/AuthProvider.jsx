@@ -40,18 +40,19 @@ console.log('Current User:', currentUser);
                 axios.post('http://localhost:3000/jwt', userInfo, { withCredentials: true })
                     .then(res => {
                         console.log("User login",res.data);
+                        setLoading(false);
                     })
             }
             else {
                 axios.post('http://localhost:3000/logout',{}, { withCredentials: true })
                     .then(res => {
                         console.log("User sign out",res.data);
+                        setLoading(false);
                     })
             }
 
 
 
-            setLoading(false);
 
         });
 
