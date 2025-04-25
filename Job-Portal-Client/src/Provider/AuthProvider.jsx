@@ -37,14 +37,14 @@ console.log('Current User:', currentUser);
                 const userInfo = {
                     email: currentUser.email,
                 }
-                axios.post('http://localhost:3000/jwt', userInfo, { withCredentials: true })
+                axios.post('https://job-portal-server-d28ye5li7-shamimhossain1s-projects.vercel.app/jwt', userInfo, { withCredentials: true })
                     .then(res => {
                         console.log("User login",res.data);
                         setLoading(false);
                     })
             }
             else {
-                axios.post('http://localhost:3000/logout',{}, { withCredentials: true })
+                axios.post('https://job-portal-server-d28ye5li7-shamimhossain1s-projects.vercel.app/logout',{}, { withCredentials: true })
                     .then(res => {
                         console.log("User sign out",res.data);
                         setLoading(false);

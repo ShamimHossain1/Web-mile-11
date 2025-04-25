@@ -44,7 +44,7 @@ const AddJobs = () => {
             company_logo: form.company_logo.value
         };
 
-        fetch("http://localhost:3000/AddJobs",{
+        fetch("https://job-portal-server-d28ye5li7-shamimhossain1s-projects.vercel.app/AddJobs",{
             method: 'POST',
             headers:{
                 'Content-Type': 'application/json'

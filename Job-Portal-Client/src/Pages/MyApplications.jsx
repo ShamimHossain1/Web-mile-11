@@ -26,10 +26,10 @@ const MyApplications = () => {
         const fetchData = async () => {
             try {
                 // Fetch applied jobs
-                // const appliedResponse = await fetch(`http://localhost:3000/job-Applications?email=${user?.email}`);
+                // const appliedResponse = await fetch(`https://job-portal-server-d28ye5li7-shamimhossain1s-projects.vercel.app/job-Applications?email=${user?.email}`);
                 // const appliedData = await appliedResponse.json();
 
-                // axios.get(`http://localhost:3000/job-Applications?email=${user?.email}`, { withCredentials: true })
+                // axios.get(`https://job-portal-server-d28ye5li7-shamimhossain1s-projects.vercel.app/job-Applications?email=${user?.email}`, { withCredentials: true })
                 // .then(res => {
                 //     setAppliedJobs(res.data);
                 // })
@@ -43,7 +43,7 @@ const MyApplications = () => {
 
 
                 // Fetch all jobs
-                const jobsResponse = await fetch('http://localhost:3000/jobs');
+                const jobsResponse = await fetch('https://job-portal-server-d28ye5li7-shamimhossain1s-projects.vercel.app/jobs');
                 const jobsData = await jobsResponse.json();
                 setJobs(jobsData);
             } catch (error) {

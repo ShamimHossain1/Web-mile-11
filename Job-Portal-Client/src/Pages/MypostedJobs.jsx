@@ -10,7 +10,7 @@ const MypostedJobs = () => {
 
     useEffect(() => {
         if (user?.email) {
-            fetch(`http://localhost:3000/jobs?hr_email=${user.email}`)
+            fetch(`https://job-portal-server-d28ye5li7-shamimhossain1s-projects.vercel.app/jobs?hr_email=${user.email}`)
                 .then(res => res.json())
                 .then(data => setJobs(data));
         }
@@ -29,7 +29,7 @@ const MypostedJobs = () => {
             color: '#f3f4f6'
         }).then((result) => {
             if (result.isConfirmed) {
-                fetch(`http://localhost:3000/jobs/${id}`, {
+                fetch(`https://job-portal-server-d28ye5li7-shamimhossain1s-projects.vercel.app/jobs/${id}`, {
                     method: 'DELETE'
                 })
                     .then(res => res.json())

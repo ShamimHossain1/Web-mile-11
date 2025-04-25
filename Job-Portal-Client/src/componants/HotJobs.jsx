@@ -7,7 +7,7 @@ const HotJobs = () => {
     const [jobs, setJobs] = useState([]);
 
     useEffect(() => {
-        fetch('http://localhost:3000/jobs')
+        fetch('https://job-portal-server-d28ye5li7-shamimhossain1s-projects.vercel.app/jobs')
             .then(res => res.json())
             .then(data => setJobs(data))
     }, [])
@@ -15,7 +15,7 @@ const HotJobs = () => {
     // console.log(jobs);
 
     // // Make a request for a user with a given ID
-    // axios.get('http://localhost:3000/jobs')
+    // axios.get('https://job-portal-server-d28ye5li7-shamimhossain1s-projects.vercel.app/jobs')
     //     .then(function (response) {
     //         // handle success
     //         setJobs(response);

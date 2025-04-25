@@ -20,13 +20,13 @@ const Login = () => {
         // console.log(user);
         setUser(user);
         setLoading(false);
-        // form.reset();
-        // navigate( location?.state || '/');
+        form.reset();
+        navigate( location?.state || '/');
 
         const userInfo = {
           email: user.email,
         }
-        // axios.post('http://localhost:3000/jwt', userInfo, { withCredentials: true })
+        // axios.post('https://job-portal-server-d28ye5li7-shamimhossain1s-projects.vercel.app/jwt', userInfo, { withCredentials: true })
         //   .then(res => {
         //     console.log(res.data);
         //   })

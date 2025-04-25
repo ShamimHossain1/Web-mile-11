@@ -8,7 +8,7 @@ const Applicants = () => {
 
     const handleStatusChange = (id, newStatus) => {
 
-        fetch(`http://localhost:3000/job-applications/${id}`, {
+        fetch(`https://job-portal-server-d28ye5li7-shamimhossain1s-projects.vercel.app/job-applications/${id}`, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json',
